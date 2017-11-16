@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+ <style>
+ 		.states {
+	fill: #e5e5e5;
+	stroke: #fff;
+	stroke-width:2px;
+	}
+ </style>
+	<body>
+	<meta charset="utf-8">
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="Internships.json"></script>
+
+		<script type="text/javascript">
+            var base_color = d3.scale.category20();
+			var h = window.innerHeight; 
+			var w = window.innerWidth;
+            var svg_base=d3.select("body").append("svg")
+				.attr("width",w)
+				.attr("height",h);
+			var centered;
+			var projection = d3.geo.equirectangular()
+				.scale(180)
+				.center([-w/16, h/2]);
+
+			d3.json("json/Referencemap.json", function(error,data){
+				if (error) return console.error(error);
+				var group = svg_base.selectAll("svg").append("g")
+					.data(data.features)
+					.enter();
+
+				// var center = d3.geo.centroid(data);
+
+				var path = d3.geo.path().projection(projection);
+
+				var areas = group.append("path")
+					.attr("d", path)
+					.attr("class","area")
+					.style("fill", "rgba(186, 186, 186, 0.9)")
+
+			});
+
+			d3.json("json/Internships.json", function(error,data){
+				if (error) return console.error(error);
+				console.log(data.features[0].properties);
+				var group = svg_base.selectAll("svg").append("g")
+					.data(data.features)
+					.enter();
+
+				var center = d3.geo.centroid(data);
+
+				var path = d3.geo.path().projection(projection);
+
+				var circles = group.append("path")
+					.attr("d", path)
+					.attr("class","circle")
+					.style("fill", "rgb(243, 72, 72)")
+
+			});
+
+
+			// aa = [-93.620199999999954, 42.025340000000028]
+			// console.log(projection(aa));
+			// svg_base.selectAll("circle")
+			// 		.data([aa])
+			// 		.enter()
+			// 		.append("circle")
+			// 		.attr("cx", function(d) {
+			// 			console.log(projection(d));
+			// 			return projection(d)[0];
+			// 		})
+			// 		.attr("cy", function(d) {
+			// 			return projection(d)[1];
+			// 		})
+			// 		.attr("r", "8px")
+			// 		.attr("fill", "rgb(243, 72, 72)")
+			// d3.json("Internships.json", function(error, data){
+			// 	if (error) return console.error(error);
+			// 	svg_base.selectAll("circle")
+			// 		.data(data.features)
+			// 		.enter()
+			// 		.append("circle")
+			// 		.attr("cx", function(d) {
+			// 			lon = d.properties.DisplayX;
+			// 			lat = d.properties.DisplayY;
+			// 			return projection([lat, lon])[0];
+			// 		})
+			// 		.attr("cy", function(d) {
+			// 			return projection([lat, lon])[1];
+			// 		})
+			// 		.attr("r", "8px")
+			// 		.attr("fill", "rgb(243, 72, 72)");
+			// });
+
+
+		</script>
+	</body>
+</html>

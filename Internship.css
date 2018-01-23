@@ -8,11 +8,12 @@ body {
 }
 
 .area {
-	stroke-width: 2px;
+	stroke-width: 1px;
 	stroke: grey;
 	fill: none;
+	z-index: 2000;
 }
 
-.circle {
+/*.circle {
 	z-index: 10000;
-}
+}*/

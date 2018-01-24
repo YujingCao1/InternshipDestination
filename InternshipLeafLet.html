@@ -44,13 +44,18 @@ a<!DOCTYPE html>
 	// 	fillOpacity: 0.8
 	// };
 
-	// Pin all the city
+	// Pin all the city. Next step is to customize the size based on the number of students in each internship destination.
 	 d3.json("json/Internships.json", function(error, data){
 	 	if (error) return console.error(error);
 	 	for (var i = 0; i < data.features.length; i++){
+	 		// Check if the numbers of female and male are NAs
+	 		f_number = data.features[i].properties.F == "NA"? 0:data.features[i].properties.F
+	 		m_number = data.features[i].properties.M == "NA"? 0:data.features[i].properties.M
+	 		radiusLen = m_number + f_number
 	 		var geojsonMarkerOptions = {
-	 			radius: 8,
-	 			fillcolor: "#E40A0A",
+	 			radius: radiusLen/3,
+	 			fillcolor: "rgba(228, 10, 10, 1)",
+	 			color: "rgba(228, 10, 10, 1)",
 	 			weight: 1,
 	 			opacity: 1,
 	 			fillOpacity: 0.8

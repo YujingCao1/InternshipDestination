@@ -1,0 +1,36 @@
+html,body {
+    height: 100%;
+    width: 100%;
+
+}
+body {
+    margin: 0;
+}
+select {
+    width: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+
+}
+.nicebox {
+    position: absolute;
+    text-align: center;
+    font-family: "Roboto", "Arial", sans-serif;
+    z-index: 5;
+    box-shadow: 0 4px 6px -4px #333;
+    padding: 0.5% 1%;
+    background: rgb(255,255,255);
+    background: linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%);
+    border: rgb(229, 229, 229) 1px solid;
+    height: auto;
+}
+#controls {
+    top: 3.5%;
+    left: 3%;
+    width: 20%;
+    height: auto;
+    float: left;
+}

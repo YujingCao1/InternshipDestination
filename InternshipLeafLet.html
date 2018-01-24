@@ -1,31 +1,28 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
     <script src="https://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="InternshipLeafLet.css">
 	<title>Internship Destinations</title>
-
-	<style>
-		html,
-    body {
-        height: 100%;
-        width: 100%;
-
-    }
-    body {
-        margin: 0;
-    }
-    #map {
-        width: 100%;
-        height: 100%;
-
-    }
-	</style>
 </head>
 <body>
-<div id="map"></div>
+	<div id="controls", class="nicebox">
+		<div>
+			<select>
+				<option value="Category"> Select a Category</option>
+				<option value="ContEd">Contiune Education</option>
+				<option value="Employ">Employ</option>
+				<option value="Fellow">Fellowship</option>
+				<option value="GradSch">Graduate School</option>
+				<option value="Other">Other</option>
+				<option value="Service">Service</option>
+			</select>
+		</div>
+	</div>
+	<div id="map"></div>
 </body>
 
 <script type="text/javascript">
@@ -34,38 +31,28 @@ a<!DOCTYPE html>
 	var map = L.map('map').setView([20, 0], 2);
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
-	// Define the attributes of points
-	// var geojsonMarkerOptions = {
-	// 	radius: 8,
-	// 	fillcolor: "#E40A0A",
-	// 	color: "#000",
-	// 	weight: 1,
-	// 	opacity: 1,
-	// 	fillOpacity: 0.8
-	// };
-
 	// Pin all the city. Next step is to customize the size based on the number of students in each internship destination.
 	 d3.json("json/Internships.json", function(error, data){
 	 	if (error) return console.error(error);
 	 	for (var i = 0; i < data.features.length; i++){
 	 		// Check if the numbers of female and male are NAs
-	 		f_number = data.features[i].properties.F == "NA"? 0:data.features[i].properties.F
-	 		m_number = data.features[i].properties.M == "NA"? 0:data.features[i].properties.M
-	 		radiusLen = m_number + f_number
-	 		var geojsonMarkerOptions = {
-	 			radius: radiusLen/3,
-	 			fillcolor: "rgba(228, 10, 10, 1)",
-	 			color: "rgba(228, 10, 10, 1)",
-	 			weight: 1,
-	 			opacity: 1,
-	 			fillOpacity: 0.8
-	 		};
-	 		name = data.features[i].properties.ARC_City + ", " + data.features[i].properties.ARC_CountryCode;
-	 		lon = data.features[i].geometry.coordinates[0];
-	 		lat = data.features[i].geometry.coordinates[1];
-	 		L.circleMarker([lat, lon], geojsonMarkerOptions)
-	 			.bindPopup(name)
-	 			.addTo(map)
+				f_number = data.features[i].properties.F == "NA"? 0:data.features[i].properties.F
+	 			m_number = data.features[i].properties.M == "NA"? 0:data.features[i].properties.M
+	 			radiusLen = parseInt(m_number) + parseInt(f_number) // Convert m_number and f_number to int.
+	 			var geojsonMarkerOptions = {
+	 				radius: radiusLen*2,
+	 				fillcolor: "rgba(228, 10, 10, 1)",
+	 				color: "rgba(228, 10, 10, 1)",
+	 				weight: 1,
+	 				opacity: 1,
+	 				fillOpacity: 0.8
+	 			};
+	 			name = data.features[i].properties.ARC_City + ", " + data.features[i].properties.ARC_CountryCode;
+	 			lon = data.features[i].geometry.coordinates[0];
+	 			lat = data.features[i].geometry.coordinates[1];
+	 			L.circleMarker([lat, lon], geojsonMarkerOptions)
+	 				.bindPopup(name)
+	 				.addTo(map)
 	 	}
 	 });
 </script>

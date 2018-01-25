@@ -12,7 +12,7 @@
 	<div id="controls", class="nicebox">
 		<div>
 			<select id="CLSCommunity">
-				<option value="Category"> Select a Career Life Service Community</option>
+				<option value="Category", selected="selected"> Select a Career Life Service Community</option>
 				<option value="arts_media_communication">Arts/Media/Communication</option>
 				<option value="business___finance">Business and Finance</option>
 				<option value="education">Education</option>
@@ -30,34 +30,71 @@
 	var map = L.map('map').setView([20, 0], 2);
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
+	// Default map
+
 	var optionAttr = document.getElementById("CLSCommunity")
 	optionAttr.addEventListener('change', function(){
-		console.log(optionAttr.options[optionAttr.selectedIndex].value)
+		var attrselected = optionAttr.options[optionAttr.selectedIndex].value;
+		console.log(attrselected);
+		if (attrselected != "Category"){
+			filterData();
+		}else{
+			fullData();
+		}
 	})
 
-	// Pin all the city. Next step is to customize the size based on the number of students in each internship destination.
-	 d3.json("json/Internships.json", function(error, data){
-	 	if (error) return console.error(error);
-	 	for (var i = 0; i < data.features.length; i++){
-	 		// Check if the numbers of female and male are NAs
-				f_number = data.features[i].properties.F == "NA"? 0:data.features[i].properties.F
-	 			m_number = data.features[i].properties.M == "NA"? 0:data.features[i].properties.M
-	 			radiusLen = parseInt(m_number) + parseInt(f_number) // Convert m_number and f_number to int.
-	 			var geojsonMarkerOptions = {
-	 				radius: radiusLen*2,
-	 				fillcolor: "rgba(228, 10, 10, 1)",
-	 				color: "rgba(228, 10, 10, 1)",
-	 				weight: 1,
-	 				opacity: 1,
-	 				fillOpacity: 0.8
-	 			};
-	 			name = data.features[i].properties.ARC_City + ", " + data.features[i].properties.ARC_CountryCode;
-	 			lon = data.features[i].geometry.coordinates[0];
-	 			lat = data.features[i].geometry.coordinates[1];
-	 			L.circleMarker([lat, lon], geojsonMarkerOptions)
-	 				.bindPopup(name)
-	 				.addTo(map)
-	 	}
-	 });
+	// Full dataset
+	function fullData(){	
+		// Pin all the city. Next step is to customize the size based on the number of students in each internship destination.
+		d3.json("json/Internships.json", function(error, data){
+		 		if (error) return console.error(error);
+		 		for (var i = 0; i < data.features.length; i++){
+		 			// Check if the numbers of female and male are NAs
+						f_number = data.features[i].properties.F == "NA"? 0:data.features[i].properties.F
+		 				m_number = data.features[i].properties.M == "NA"? 0:data.features[i].properties.M
+		 				radiusLen = parseInt(m_number) + parseInt(f_number) // Convert m_number and f_number to int.
+		 				var geojsonMarkerOptions = {
+		 					radius: radiusLen*2,
+		 					fillcolor: "rgba(228, 10, 10, 1)",
+		 					color: "rgba(228, 10, 10, 1)",
+		 					weight: 1,
+		 					opacity: 1,
+		 					fillOpacity: 0.8
+		 				};
+		 				name = data.features[i].properties.ARC_City + ", " + data.features[i].properties.ARC_CountryCode;
+		 				lon = data.features[i].geometry.coordinates[0];
+		 				lat = data.features[i].geometry.coordinates[1];
+		 				L.circleMarker([lat, lon], geojsonMarkerOptions)
+		 					.bindPopup(name)
+		 					.addTo(map)
+		 		}
+		 });
+	}
+	// Filtering dataset by the selected attribute.
+	function filterData(){
+		var e = optionAttr.options[optionAttr.selectedIndex].value;	
+		d3.json("json/Internships.json", function(error, data){
+		 		if (error) return console.error(error);
+		 		for (var i = 0; i < data.features.length; i++){
+		 			// Check if the numbers of female and male are NAs
+						e_value = data.features[i].properties[e] == "NA"? 0:data.features[i].properties[e]
+		 				radiusLen = parseInt(e_value) // Convert m_number and f_number to int.
+		 				var geojsonMarkerOptions = {
+		 					radius: radiusLen*2,
+		 					fillcolor: "rgba(228, 10, 10, 1)",
+		 					color: "rgba(228, 10, 10, 1)",
+		 					weight: 1,
+		 					opacity: 1,
+		 					fillOpacity: 0.8
+		 				};
+		 				name = data.features[i].properties.ARC_City + ", " + data.features[i].properties.ARC_CountryCode;
+		 				lon = data.features[i].geometry.coordinates[0];
+		 				lat = data.features[i].geometry.coordinates[1];
+		 				L.circleMarker([lat, lon], geojsonMarkerOptions)
+		 					.bindPopup(name)
+		 					.addTo(map)
+		 		}
+		 });
+	}
 </script>
 </html>

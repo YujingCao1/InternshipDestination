@@ -23,6 +23,36 @@
 			</select>
 		</div>
 	</div>
+	<div id="info_table">
+		<div id="location">Text</div>
+		<div class="line"></div>
+		<table id="demoTable">
+			<tr>
+				<th class="f">Female</th>
+				<th class="m">Male</th>
+				<th class="american">Native American</th>
+				<th class="asia">Asian</th>
+				<th class="black">Black or African American</th>
+				<th class="hispanic">Hispanic</th>
+				<th class="white">White</th>
+				<th class="international">International</th>
+				<th class="domestic">Domestic</th>
+				<th class="firstgen">First Generation</th>
+			</tr>
+			<tr>
+				<td class="f">Text</td>
+				<td class="m">Text</td>
+				<td class="american">Text</td>
+				<td class="asia">Text</td>
+				<td class="black">Text</td>
+				<td class="hispanic">Text</td>
+				<td class="white">Text</td>
+				<td class="international">Text</td>
+				<td class="domestic">Text</td>
+				<td class="firstgen">Text</td>
+			</tr>
+		</table>
+	</div>
 	<div id="map"></div>
 </body>
 
@@ -43,6 +73,7 @@
 		}
 	})
 
+	var markers = {}
 	// Full dataset
 	function fullData(){	
 		// Pin all the city. Next step is to customize the size based on the number of students in each internship destination.
@@ -54,7 +85,7 @@
 		 				m_number = data.features[i].properties.M == "NA"? 0:data.features[i].properties.M
 		 				radiusLen = parseInt(m_number) + parseInt(f_number) // Convert m_number and f_number to int.
 		 				var geojsonMarkerOptions = {
-		 					radius: radiusLen*2,
+		 					radius: radiusLen*3,
 		 					fillcolor: "rgba(228, 10, 10, 1)",
 		 					color: "rgba(228, 10, 10, 1)",
 		 					weight: 1,
@@ -87,7 +118,8 @@
 		 					opacity: 1,
 		 					fillOpacity: 0.8
 		 				};
-		 				name = data.features[i].properties.ARC_City + ", " + data.features[i].properties.ARC_CountryCode;
+		 				name = data.features[i].properties.ARC_City + ", " + data.features[i].properties.ARC_CountryCode + 
+		 						"<br/>" + "Number of Students: " + radiusLen;
 		 				lon = data.features[i].geometry.coordinates[0];
 		 				lat = data.features[i].geometry.coordinates[1];
 		 				L.circleMarker([lat, lon], geojsonMarkerOptions)
@@ -95,6 +127,22 @@
 		 					.addTo(map)
 		 		}
 		 });
+	};
+
+	// Generate a table dynamically
+	function fillTable(prop){
+		document.getElementById("info_table").style.display = "block";
+		document.getElementById("location").innerHTML = prop["ARC_City"] + prop["ARC_CountryCode"]
+		var female = prop["F"]
+		var male = prop["M"]
+		var nativeamerican = prop["American_Indian_or_Alaska_Native"]
+		var asian = prop["Asian"]
+		var africanamerican = prop["Black_or_African_American"]
+		var hispanic = prop["Hispanic__of_any_race_"]
+		var white = prop["White"]
+		var international = prop["International"]
+		var domestic = prop["Domestic"]
+		var firstgen = prop["FirstGen"]
 	}
 </script>
 </html>

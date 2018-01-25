@@ -34,3 +34,15 @@ select {
     height: auto;
     float: left;
 }
+#location {
+    font-size: 24px;
+    margin-bottom: 2px;
+}
+.line{
+    height: 0px;
+    widows: 100%;
+}
+#demoTable{
+    border: 1px;
+    width: 100%;
+}

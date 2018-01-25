@@ -128,21 +128,31 @@
 		 		}
 		 });
 	};
-
+    
+    // How to click markers to fill information table
+    d3.json("json/Internships.json", function(error, data){
+    	if (error) return console.error(error);
+    	for (var i = 0; i < data.features.length; i++){
+    		lon = data.features[i].geometry.coordinates[0];
+    		lat = data.features[i].geometry.coordinates[1];
+    		L.circleMarker([lat, lon])
+    			.on("click", fillTable(data.features[i].properties))
+    	}	
+    })
 	// Generate a table dynamically
-	function fillTable(prop){
+	function fillTable(d){
 		document.getElementById("info_table").style.display = "block";
-		document.getElementById("location").innerHTML = prop["ARC_City"] + prop["ARC_CountryCode"]
-		var female = prop["F"]
-		var male = prop["M"]
-		var nativeamerican = prop["American_Indian_or_Alaska_Native"]
-		var asian = prop["Asian"]
-		var africanamerican = prop["Black_or_African_American"]
-		var hispanic = prop["Hispanic__of_any_race_"]
-		var white = prop["White"]
-		var international = prop["International"]
-		var domestic = prop["Domestic"]
-		var firstgen = prop["FirstGen"]
+		document.getElementById("location").innerHTML = d.ARC_City + ", " + d.ARC_CountryCode
+		var female = d.F
+		var male = d.M
+		var nativeamerican = d.American_Indian_or_Alaska_Native
+		var asian = d.Asian
+		var africanamerican = d.Black_or_African_American
+		var hispanic = d.Hispanic__of_any_race_
+		var white = d.White
+		var international = d.International
+		var domestic = d.Domestic
+		var firstgen = d.FirstGen
 	}
 </script>
 </html>

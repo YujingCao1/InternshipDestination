@@ -34,6 +34,12 @@ select {
     height: auto;
     float: left;
 }
+#info_table {
+    position: absolute;
+    top: 86%;
+    left: 15%;
+    z-index: 10000;
+}
 #location {
     font-size: 24px;
     margin-bottom: 2px;
@@ -42,7 +48,8 @@ select {
     height: 0px;
     widows: 100%;
 }
-#demoTable{
+table{
     border: 1px;
     width: 100%;
+    border: 1px solid black;
 }

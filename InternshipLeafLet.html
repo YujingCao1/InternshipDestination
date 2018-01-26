@@ -40,16 +40,16 @@
 				<th class="firstgen">First Generation</th>
 			</tr>
 			<tr>
-				<td class="f">Text</td>
-				<td class="m">Text</td>
-				<td class="american">Text</td>
-				<td class="asia">Text</td>
-				<td class="black">Text</td>
-				<td class="hispanic">Text</td>
-				<td class="white">Text</td>
-				<td class="international">Text</td>
-				<td class="domestic">Text</td>
-				<td class="firstgen">Text</td>
+				<td class="f", id="f_number">Text</td>
+				<td class="m", id="m_number">Text</td>
+				<td class="american", id="american_number">Text</td>
+				<td class="asia", id="asia_number">Text</td>
+				<td class="black", id="black_number">Text</td>
+				<td class="hispanic", id="hispanic_number">Text</td>
+				<td class="white", id="white_number">Text</td>
+				<td class="international", id="international_number">Text</td>
+				<td class="domestic", id="domestic_number">Text</td>
+				<td class="firstgen", id="firstgen_number">Text</td>
 			</tr>
 		</table>
 	</div>
@@ -143,16 +143,27 @@
 	function fillTable(d){
 		document.getElementById("info_table").style.display = "block";
 		document.getElementById("location").innerHTML = d.ARC_City + ", " + d.ARC_CountryCode
-		var female = d.F
-		var male = d.M
-		var nativeamerican = d.American_Indian_or_Alaska_Native
-		var asian = d.Asian
-		var africanamerican = d.Black_or_African_American
-		var hispanic = d.Hispanic__of_any_race_
-		var white = d.White
-		var international = d.International
-		var domestic = d.Domestic
-		var firstgen = d.FirstGen
+		var female = d.F;
+		var male = d.M;
+		var nativeamerican = d.American_Indian_or_Alaska_Native;
+		var asian = d.Asian;
+		var africanamerican = d.Black_or_African_American;
+		var hispanic = d.Hispanic__of_any_race_;
+		var white = d.White;
+		var international = d.International;
+		var domestic = d.Domestic;
+		var firstgen = d.FirstGen;
+
+		document.getElementById("f_number").innerHTML = female != "NA"? female:0;
+		document.getElementById("m_number").innerHTML = male != "NA"? male:0;
+		document.getElementById("american_number").innerHTML = nativeamerican != "NA"? nativeamerican:0;
+		document.getElementById("asia_number").innerHTML = asian != "NA"? asian:0;
+		document.getElementById("black_number").innerHTML = africanamerican != "NA"? africanamerican:0;
+		document.getElementById("hispanic_number").innerHTML = hispanic != "NA"? hispanic:0;
+		document.getElementById("white_number").innerHTML = white != "NA"? white:0;
+		document.getElementById("international_number").innerHTML = international != "NA"? international:0;
+		document.getElementById("domestic_number").innerHTML = domestic != "NA"? domestic:0;
+		document.getElementById("firstgen_number").innerHTML = firstgen != "NA"? firstgen:0;
 	}
 </script>
 </html>
